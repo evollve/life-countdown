@@ -1,59 +1,101 @@
+function calculate() {
+    let birthdateValue = document.getElementById('birthdateInput').value;
+    if (!birthdateValue) {
+        alert('Please enter a valid birthdate.');
+        return;
+    }
+    birthDate = new Date(birthdateValue);
+    updateTimer();
+    updateLifeProgress();
+    displayAge(birthDate);
+    displayMilestones(birthDate);
+}
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+let birthDate = null;
+
+function calculate() {
+    let birthdateValue = document.getElementById('birthdateInput').value;
+    if (!birthdateValue) {
+        alert('Please enter a valid birthdate.');
+        return;
+    }
+    birthDate = new Date(birthdateValue);
+    updateTimer();
+    updateLifeProgress();
+    displayAge(birthDate);
+    displayMilestones(birthDate);
+}
+
 function updateTimer() {
-    var now = new Date();
-    var countdownDate = new Date('February 14, 2069 00:00:00');
-    var countupDate = new Date('February 14, 1992 00:00:00');
-    
-    var countdownTime = countdownDate - now;
-    var countupTime = now - countupDate;
+    if (!birthDate) return;
 
-    var daysToGo = Math.floor(countdownTime / (1000 * 60 * 60 * 24));
-    var daysSince = Math.floor(countupTime / (1000 * 60 * 60 * 24));
+    const now = new Date();
+    const countupTime = now - birthDate;
+    const daysSince = Math.floor(countupTime / (1000 * 60 * 60 * 24));
+    document.getElementById('countup').textContent = numberWithCommas(daysSince) + ' days';
 
-    document.getElementById('countdown').innerHTML = daysToGo + ' days';
-    document.getElementById('countup').innerHTML = daysSince + ' days';
+    const expectedLifespan = 77;
+    const endDate = new Date(birthDate.getFullYear() + expectedLifespan, birthDate.getMonth(), birthDate.getDate());
+    const countdownTime = endDate - now;
+    const daysToGo = Math.floor(countdownTime / (1000 * 60 * 60 * 24));
+    document.getElementById('countdown').textContent = numberWithCommas(daysToGo) + ' days';
 }
 
 function updateLifeProgress() {
-    var birthDate = new Date('February 14, 1992 00:00:00');
-    var endDate = new Date('February 14, 2069 00:00:00');
-    var now = new Date();
+    if (!birthDate) return;
 
-    var totalLifeSpan = endDate - birthDate;
-    var livedLifeSpan = now - birthDate;
+    const now = new Date();
+    const expectedLifespan = 77;
+    const endDate = new Date(birthDate.getFullYear() + expectedLifespan, birthDate.getMonth(), birthDate.getDate());
+    const totalLifeSpan = endDate - birthDate;
+    const livedLifeSpan = now - birthDate;
+    const lifeProgress = Math.min(Math.max((livedLifeSpan / totalLifeSpan) * 100, 0), 100);
 
-    var lifeProgress = (livedLifeSpan / totalLifeSpan) * 100;
-    lifeProgress = Math.min(Math.max(lifeProgress, 0), 100); // Ensure it's between 0 and 100
+    const progressBar = document.getElementById('lifeProgressBar');
+    progressBar.style.width = lifeProgress + '%';
+    document.getElementById('lifeProgressPercentage').textContent = lifeProgress.toFixed(2) + '% of your life completed';
 
-    document.getElementById('lifeProgressBar').style.width = lifeProgress + '%';
-    document.getElementById('lifeProgressPercentage').innerHTML = lifeProgress.toFixed(2) + '% of your life completed';
-    updateLifeProgressChart(lifeProgress);
+    const svgWidth = document.getElementById('lifespanTimeline').clientWidth;
+    const progressPosition = (svgWidth * lifeProgress) / 100;
+
+    // Make the emoji visible and position it along the timeline
+    const icon = document.getElementById('lifeProgressIcon');
+    icon.style.display = 'block';
+    icon.setAttribute('x', progressPosition);
+    const age = now.getFullYear() - birthDate.getFullYear();
+    const currentAgeText = document.getElementById('currentAgeText');
+    currentAgeText.textContent = `${age} years old`;
+    currentAgeText.setAttribute('x', progressPosition);
 }
 
-function updateLifeProgressChart(percentage) {
-    var svg = document.getElementById('lifeProgressChart');
-    svg.innerHTML = ''; // Clear existing content
-
-    var radius = 90;
-    var circumference = 2 * Math.PI * radius;
-    var strokeVal = (percentage / 100) * circumference;
-
-    svg.innerHTML = `
-        <circle cx="100" cy="100" r="${radius}" stroke="#e0e0e0" stroke-width="20" fill="none" />
-        <circle cx="100" cy="100" r="${radius}" stroke="#4caf50" stroke-width="20" fill="none"
-                stroke-dasharray="${circumference} ${circumference}"
-                stroke-dashoffset="${circumference}" 
-                style="transform: rotate(-90deg); transform-origin: center; transition: stroke-dashoffset 0.5s;" />
-    `;
-
-    // Animate the stroke offset
-    var progressCircle = svg.querySelector('circle:nth-child(2)');
-    progressCircle.style.strokeDashoffset = circumference - strokeVal;
+function displayAge(birthdate) {
+    const now = new Date();
+    let age = now.getFullYear() - birthdate.getFullYear();
+    const m = now.getMonth() - birthdate.getMonth();
+    if (m < 0 || (m === 0 && now.getDate() < birthdate.getDate())) {
+        age--;
+    }
+    document.getElementById('age').textContent = `${age} years old`;
 }
 
-setInterval(() => {
-    updateTimer();
-    updateLifeProgress();
-}, 1000);
+function displayMilestones(birthdate) {
+    const now = new Date();
+    const milestones = {
+        '16th Birthday (Driving Age)': new Date(birthdate.getFullYear() + 16, birthdate.getMonth(), birthdate.getDate()),
+        '18th Birthday (Voting Age)': new Date(birthdate.getFullYear() + 18, birthdate.getMonth(), birthdate.getDate()),
+        '21st Birthday (Drinking Age)': new Date(birthdate.getFullYear() + 21, birthdate.getMonth(), birthdate.getDate()),
+        'Retirement Age (67 years)': new Date(birthdate.getFullYear() + 67, birthdate.getMonth(), birthdate.getDate())
+    };
 
-updateTimer();
-updateLifeProgress();
+    let milestoneListHtml = '';
+    for (let milestone in milestones) {
+        const date = new Date(milestones[milestone]);
+        const isPast = now > date;
+        milestoneListHtml += `<strong>${milestone}:</strong> ${date.toLocaleDateString()}${isPast ? ' (Passed)' : ''}<br>`;
+    }
+
+    document.getElementById('milestoneList').innerHTML = milestoneListHtml;
+}

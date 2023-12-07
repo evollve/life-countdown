@@ -13,6 +13,43 @@ body {
     padding: 20px;
 }
 
+/* Style for the date input */
+#birthdateInput {
+    padding: 10px;      /* Bigger touch target */
+    font-size: 16px;    /* Larger text */
+    border: 2px solid #ddd; /* Stylish border */
+    border-radius: 5px; /* Rounded corners */
+    width: calc(100% - 24px); /* Full width taking padding and border into account */
+    margin-bottom: 10px; /* Space below the input */
+    box-sizing: border-box; /* Border-box sizing to include padding and border in the width */
+}
+
+/* Style for the input area for spacing */
+.input-area {
+    padding: 20px;
+    text-align: middle; /* Aligns the text to the left */
+    max-width: 175px; /* Matches the width of your .container */
+    margin: 20px auto; /* Centering the input area */
+}
+
+/* Style for the submit button to match the input */
+#calculateButton {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4caf50; /* A green color; change as needed */
+    color: white; /* White text color */
+    cursor: pointer; /* Makes it clear the button is clickable */
+    margin-top: 10px; /* Space above the button */
+}
+
+/* Change button color on hover for better user experience */
+#calculateButton:hover {
+    background-color: #45a049;
+}
+
+
 .timer {
     background-color: #ffffff;
     border: 1px solid #ddd;
@@ -42,6 +79,29 @@ body {
     margin: 20px auto;
     width: 200px; /* Width of the SVG chart */
 }
+
+/* Smooth transitions for progress bars */
+#lifeProgressBar, #lifeProgressChart circle:nth-child(2) {
+    transition: width 1s ease-out, stroke-dashoffset 1s ease-out;
+}
+
+.timeline-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    margin: 20px 0;
+    position: relative; /* Add this if not present */
+}
+
+/* Adjust the SVG width if necessary */
+#lifespanTimeline {
+    max-width: 600px; /* Match the width of your container or adjust as needed */
+    width: 100%;
+    height: 100px;
+    position: absolute; /* Add this to position it relative to the timeline-container */
+}
+
 
 h1 {
     font-size: 24px;
