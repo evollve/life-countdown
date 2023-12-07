@@ -22,8 +22,6 @@ body {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-/* ... existing CSS ... */
-
 #lifeProgressBarContainer {
     width: 100%;
     background-color: #e0e0e0;
@@ -40,16 +38,10 @@ body {
     transition: width 0.5s;
 }
 
-/* ... existing CSS ... */
-
-/* ... existing CSS ... */
-
 #lifeProgressChartContainer {
     margin: 20px auto;
     width: 200px; /* Width of the SVG chart */
 }
-
-/* ... existing CSS ... */
 
 h1 {
     font-size: 24px;
