@@ -44,32 +44,21 @@ function updateTimer() {
     document.getElementById('countdown').textContent = numberWithCommas(daysToGo) + ' days';
 }
 
-// function updateLifeProgress() {
-//     if (!birthDate) return;
+function updateLifeProgress() {
+    if (!birthDate) return;
 
-//     const now = new Date();
-//     const expectedLifespan = 77;
-//     const endDate = new Date(birthDate.getFullYear() + expectedLifespan, birthDate.getMonth(), birthDate.getDate());
-//     const totalLifeSpan = endDate - birthDate;
-//     const livedLifeSpan = now - birthDate;
-//     const lifeProgress = Math.min(Math.max((livedLifeSpan / totalLifeSpan) * 100, 0), 100);
+    const now = new Date();
+    const expectedLifespan = 77; // Change this as per your requirement
+    const endDate = new Date(birthDate.getFullYear() + expectedLifespan, birthDate.getMonth(), birthDate.getDate());
+    const totalLifeSpan = endDate - birthDate;
+    const livedLifeSpan = now - birthDate;
+    const lifeProgress = Math.min(Math.max((livedLifeSpan / totalLifeSpan) * 100, 0), 100);
 
-//     const progressBar = document.getElementById('lifeProgressBar');
-//     progressBar.style.width = lifeProgress + '%';
-//     document.getElementById('lifeProgressPercentage').textContent = lifeProgress.toFixed(2) + '% of your life completed';
+    const progressBar = document.getElementById('lifeProgressBar');
+    progressBar.style.width = lifeProgress + '%';
+    document.getElementById('lifeProgressPercentage').textContent = lifeProgress.toFixed(2) + '% of your life completed';
+}
 
-//     const svgWidth = document.getElementById('lifespanTimeline').clientWidth;
-//     const progressPosition = (svgWidth * lifeProgress) / 100;
-
-//     // Make the emoji visible and position it along the timeline
-//     const icon = document.getElementById('lifeProgressIcon');
-//     icon.style.display = 'block';
-//     icon.setAttribute('x', progressPosition);
-//     const age = now.getFullYear() - birthDate.getFullYear();
-//     const currentAgeText = document.getElementById('currentAgeText');
-//     currentAgeText.textContent = `${age} years old`;
-//     currentAgeText.setAttribute('x', progressPosition);
-// }
 
 function displayAge(birthdate) {
     const now = new Date();
