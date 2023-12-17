@@ -1,16 +1,62 @@
 document.getElementById('calculateButton').addEventListener('click', calculate);
 
+// Helper functions for fadeIn and fadeOut effects
+function fadeIn(element) {
+    element.style.opacity = 0;
+    element.style.display = 'block';
+    var last = +new Date();
+    var tick = function() {
+        element.style.opacity = +element.style.opacity + (new Date() - last) / 400;
+        last = +new Date();
+
+        if (+element.style.opacity < 1) {
+            (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16);
+        }
+    };
+    tick();
+}
+
+function fadeOut(element) {
+    element.style.opacity = 1;
+    var last = +new Date();
+    var tick = function() {
+        element.style.opacity = +element.style.opacity - (new Date() - last) / 400;
+        last = +new Date();
+
+        if (+element.style.opacity > 0) {
+            (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16);
+        } else {
+            element.style.display = 'none';
+        }
+    };
+    tick();
+}
+
 function calculate() {
     let birthdateValue = document.getElementById('birthdateInput').value;
-    if (!birthdateValue) {
-        alert('Please enter a valid birthdate.');
-        return;
-    }
     let birthDate = new Date(birthdateValue);
+    let currentDate = new Date();
+    let validationMessageElement = document.getElementById('validationMessage');
+
+    // Clear previous validation messages
+    validationMessageElement.textContent = '';
+
+    // Validate the input date
+    if (!birthdateValue || birthDate >= currentDate) {
+        validationMessageElement.textContent = 'Please enter a valid birthdate in the past.';
+        fadeIn(validationMessageElement);
+        return;
+    } else {
+        fadeOut(validationMessageElement);
+    }
+
     updateTimer(birthDate);
     updateLifeProgress(birthDate);
     displayAge(birthDate);
     displayMilestones(birthDate);
+
+    // Show the results sections
+    fadeIn(document.querySelector('.results'));
 }
 
 function updateTimer(birthDate) {
@@ -19,7 +65,7 @@ function updateTimer(birthDate) {
     const daysSince = Math.floor(countupTime / (1000 * 60 * 60 * 24));
     document.getElementById('countup').textContent = numberWithCommas(daysSince) + ' days';
 
-    const expectedLifespan = 77;
+    const expectedLifespan = 77; // This can be adjusted or calculated dynamically
     const endDate = new Date(birthDate.getFullYear() + expectedLifespan, birthDate.getMonth(), birthDate.getDate());
     const countdownTime = endDate - now;
     const daysToGo = Math.floor(countdownTime / (1000 * 60 * 60 * 24));
@@ -28,11 +74,11 @@ function updateTimer(birthDate) {
 
 function updateLifeProgress(birthDate) {
     const now = new Date();
-    const expectedLifespan = 77;
+    const expectedLifespan = 77; // This can be adjusted or calculated dynamically
     const endDate = new Date(birthDate.getFullYear() + expectedLifespan, birthDate.getMonth(), birthDate.getDate());
     const totalLifeSpan = endDate - birthDate;
     const livedLifeSpan = now - birthDate;
-    const lifeProgress = Math.min(Math.max((livedLifeSpan / totalLifeSpan) * 100, 0), 100);
+    const lifeProgress = (livedLifeSpan / totalLifeSpan) * 100;
 
     const progressBar = document.getElementById('lifeProgressBar');
     progressBar.style.width = lifeProgress + '%';
@@ -46,7 +92,7 @@ function displayAge(birthDate) {
     if (m < 0 || (m === 0 && now.getDate() < birthDate.getDate())) {
         age--;
     }
-    document.getElementById('age').textContent = `${age} years old`;
+    document.getElementById('age').textContent = age + ' years old';
 }
 
 function displayMilestones(birthDate) {
@@ -62,7 +108,7 @@ function displayMilestones(birthDate) {
     for (let milestone in milestones) {
         const date = milestones[milestone];
         const isPast = now > date;
-        milestoneListHtml += `<strong>${milestone}:</strong> ${date.toLocaleDateString()}${isPast ? ' (Passed)' : ''}<br>`;
+        milestoneListHtml += `<div class="milestone">${milestone}: ${date.toDateString()} ${isPast ? '(Passed)' : ''}</div>`;
     }
 
     document.getElementById('milestoneList').innerHTML = milestoneListHtml;
@@ -71,3 +117,6 @@ function displayMilestones(birthDate) {
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
+
+// Initialize the validation message element
+document.getElementById('validationMessage').style.display = 'none';

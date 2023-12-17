@@ -5,42 +5,56 @@
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <!-- Birthday Picker -->
+    <header>
+        <div class="header-content">
+            <h1>Life Visualizer</h1>
+        </div>
+    </header>
+    <main class="container">
         <div class="input-area">
-            <label for="birthdateInput"><h2>Enter Your Birthdate:</h2></label>
-            <input type="date" id="birthdateInput">
-            <button id="calculateButton">Submit</button>
+            <label for="birthdateInput" class="section-title">Enter Your Birthdate:</label>
+            <input type="date" id="birthdateInput" class="input-field">
+            <button id="calculateButton" class="action-button">Calculate</button>
+            <p id="validationMessage" class="validation-message"></p>
         </div>
-        <!-- Age Display -->
-        <div class="age-display">
-            <h1>Your Age</h1>
-            <p id="age"></p>
+
+        <div class="results">
+            <section class="age-display">
+                <h2>Your Age</h2>
+                <p id="age" class="result-text"></p>
+            </section>
+            <section class="timer">
+                <h2>Time Since Birth</h2>
+                <p id="countup" class="result-text"></p>
+            </section>
+            <section class="timer">
+                <h2>Time Until Expected Lifespan</h2>
+                <p id="countdown" class="result-text"></p>
+            </section>
+            <section class="life-progress">
+                <h2>Your Life Progress</h2>
+                <div id="lifeProgressBarContainer" class="progress-bar">
+                    <div id="lifeProgressBar"></div>
+                </div>
+                <p id="lifeProgressPercentage" class="progress-text"></p>
+            </section>
+            <section class="milestones">
+                <h2>Important Milestones</h2>
+                <div id="milestoneList" class="milestone-list"></div>
+            </section>
         </div>
-        <!-- Time Since Birth -->
-        <div class="timer">
-            <h1>Time Since Birth</h1>
-            <p id="countup"></p>
-        </div>
-        <!-- Time Until Expected Death -->
-        <div class="timer">
-            <h1>Time Until Expected Lifespan</h1>
-            <p id="countdown"></p>
-        </div>
-        <!-- Life Progress Bar -->
-        <div class="timer">
-            <h1>Your Life Progress</h1>
-            <div id="lifeProgressBarContainer">
-                <div id="lifeProgressBar"></div>
+    </main>
+    <footer>
+        <div class="footer-content">
+            <p class="newsletter-invite">Join our newsletter for updates</p>
+            <button class="newsletter-button">Subscribe</button>
+            <div class="social-media">
+                <a href="https://facebook.com" target="_blank" class="social-link">Facebook</a>
+                <a href="https://twitter.com" target="_blank" class="social-link">Twitter</a>
+                <a href="https://instagram.com" target="_blank" class="social-link">Instagram</a>
             </div>
-            <p id="lifeProgressPercentage"></p>
         </div>
-        <!-- Important Milestones -->
-        <div class="milestones">
-            <h1>Important Milestones</h1>
-            <div id="milestoneList"></div>
-        </div>
-    </div>
+    </footer>
     <script src="script.js"></script>
 </body>
 </html>
