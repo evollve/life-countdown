@@ -8,9 +8,14 @@
     <div class="container">
         <!-- Birthday Picker -->
         <div class="input-area">
-            <h2>Enter Your Birthdate:</h2>
+            <label for="birthdateInput"><h2>Enter Your Birthdate:</h2></label>
             <input type="date" id="birthdateInput">
-            <button id="calculateButton" onclick="calculate()">Submit</button>
+            <button id="calculateButton">Submit</button>
+        </div>
+        <!-- Age Display -->
+        <div class="age-display">
+            <h1>Your Age</h1>
+            <p id="age"></p>
         </div>
         <!-- Time Since Birth -->
         <div class="timer">
@@ -29,7 +34,12 @@
                 <div id="lifeProgressBar"></div>
             </div>
             <p id="lifeProgressPercentage"></p>
-        </div>            
+        </div>
+        <!-- Important Milestones -->
+        <div class="milestones">
+            <h1>Important Milestones</h1>
+            <div id="milestoneList"></div>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>
