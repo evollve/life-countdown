@@ -98,11 +98,12 @@ function displayAge(birthDate) {
 function displayMilestones(birthDate) {
     const now = new Date();
     const milestones = {
-        '16th Birthday (Driving Age)': new Date(birthDate.getFullYear() + 16, birthDate.getMonth(), birthDate.getDate()),
-        '18th Birthday (Voting Age)': new Date(birthDate.getFullYear() + 18, birthDate.getMonth(), birthDate.getDate()),
-        '21st Birthday (Drinking Age)': new Date(birthDate.getFullYear() + 21, birthDate.getMonth(), birthDate.getDate()),
-        'Retirement Age (67 years)': new Date(birthDate.getFullYear() + 67, birthDate.getMonth(), birthDate.getDate())
+        '16th Birthday (Driving Age)': new Date(birthDate.getFullYear() + 16, birthDate.getMonth(), birthDate.getDate(), 12),
+        '18th Birthday (Voting Age)': new Date(birthDate.getFullYear() + 18, birthDate.getMonth(), birthDate.getDate(), 12),
+        '21st Birthday (Drinking Age)': new Date(birthDate.getFullYear() + 21, birthDate.getMonth(), birthDate.getDate(), 12),
+        'Retirement Age (67 years)': new Date(birthDate.getFullYear() + 67, birthDate.getMonth(), birthDate.getDate(), 12)
     };
+    
 
     let milestoneListHtml = '';
     for (let milestone in milestones) {
