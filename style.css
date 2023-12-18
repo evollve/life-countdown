@@ -8,18 +8,18 @@ body, html {
 }
 
 header {
-    background-color: #FFFFFF;
+    background-color: #E8E8E8; /* A light grey to maintain the site's soft aesthetic */
     color: #333333;
     padding: 20px 0;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     text-align: center;
 }
 
 header h1 {
-    font-size: 2em;
+    font-size: 2.2em; /* Slightly larger for prominence but not overwhelming */
     margin: 0;
-    font-weight: normal;
-    color: #5C5C5C;
+    font-weight: 500; /* Semi-bold for better readability */
+    color: #4A4A4A; /* A shade darker than the body text for contrast */
 }
 
 .container {
@@ -130,5 +130,51 @@ header h1 {
         width: 90%;
         margin: 20px auto;
     }
+    header h1 {
+        font-size: 1.8em; /* Adjusted for smaller screens */
+    }
 }
 
+#timelineContainer {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    background: #f0f0f0;
+    margin: 20px 0;
+  }
+  
+  #userTimeline {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 4px;
+    background: #333;
+  }
+  
+  .milestone {
+    position: absolute;
+    bottom: -20px; /* Half of the element's height to center it */
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    background: #4CAF50;
+    text-align: center;
+    line-height: 40px;
+    color: white;
+    cursor: pointer;
+  }
+  
+  /* Add some hover effects for interactivity */
+  .milestone:hover {
+    background: #45a049;
+  }
+  
+  
+@media (max-width: 768px) {
+
+}
+
+/* Optional: Add a subtle hover effect for interactive feel */
+header h1:hover {
+    color: #5C5C5C;
+}

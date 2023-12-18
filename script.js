@@ -120,3 +120,52 @@ function numberWithCommas(x) {
 
 // Initialize the validation message element
 document.getElementById('validationMessage').style.display = 'none';
+
+
+// Add this to your JavaScript file
+// Assuming you have a list of milestone dates
+const milestones = {
+    "Born": "1990-01-01",
+    "Graduated": "2008-05-20",
+    "Married": "2015-06-15",
+    // Add more milestones here
+  };
+  
+  // Calculate the user's age and use it to position the milestones
+  function placeMilestones() {
+    const now = new Date();
+    const birthDate = new Date(milestones["Born"]);
+    const age = now.getFullYear() - birthDate.getFullYear();
+    const timelineWidth = document.getElementById('userTimeline').offsetWidth;
+  
+    Object.keys(milestones).forEach(key => {
+      const milestoneDate = new Date(milestones[key]);
+      const milestoneAge = milestoneDate.getFullYear() - birthDate.getFullYear();
+      const position = (milestoneAge / age) * timelineWidth;
+  
+      const milestoneElement = document.createElement('div');
+      milestoneElement.className = 'milestone';
+      milestoneElement.style.left = position + 'px';
+      milestoneElement.title = key + ' - ' + milestoneDate.toDateString();
+      document.getElementById('milestoneContainer').appendChild(milestoneElement);
+    });
+  }
+  
+  // Call this function when you want to display the timeline
+  placeMilestones();
+  
+  flatpickr("#birthdateInput", {
+    altInput: true,
+    altFormat: "F j, Y",
+    dateFormat: "Y-m-d",
+    maxDate: "today"
+});
+
+function sanitizeInput(input) {
+    const div = document.createElement('div');
+    div.textContent = input;
+    return div.innerHTML;
+}
+
+// Example: Sanitizing the birthdate input before using it
+let birthdateValue = sanitizeInput(document.getElementById('birthdateInput').value);
